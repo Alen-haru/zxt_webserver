@@ -120,11 +120,11 @@ void WebServer::eventListen()
     }
 
     int ret = 0;
-    //创建
+    /* 创建监听socket的TCP/IP的IPV4 socket地址 */
     struct sockaddr_in address;
     bzero(&address, sizeof(address));
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
+    address.sin_addr.s_addr = htonl(INADDR_ANY);/* INADDR_ANY：将套接字绑定到所有可用的接口 */
     address.sin_port = htons(m_port);
     //设置端口复用
     int flag = 1;
@@ -132,7 +132,7 @@ void WebServer::eventListen()
     //绑定，参数：监听的套接字，文件描述符；服务器端的地址；
     ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address));
     assert(ret >= 0);
-    //监听
+    //监听/* 创建监听队列以存放待处理的客户连接，在这些客户连接被accept()之前 */
     ret = listen(m_listenfd, 5);
     assert(ret >= 0);
 
